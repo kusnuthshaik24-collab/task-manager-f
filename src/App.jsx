@@ -45,17 +45,14 @@ export default function App() {
 
   const [tasks, setTasks] = useState(() => {
     const savedTasks = localStorage.getItem(`tasker_tasks_${user.email}`);
-    // If no tasks exist for this email, default to an empty array [] instead of shared default tasks
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
 
-  // Switch tasks when user email changes
   useEffect(() => {
     const savedTasks = localStorage.getItem(`tasker_tasks_${user.email}`);
     setTasks(savedTasks ? JSON.parse(savedTasks) : []);
   }, [user.email]);
 
-  // Save tasks specifically for the active user
   useEffect(() => {
     localStorage.setItem(`tasker_tasks_${user.email}`, JSON.stringify(tasks));
   }, [tasks, user.email]);
@@ -467,16 +464,6 @@ const LoginPage = ({ setUser }) => {
     navigate('/dashboard');
   };
 
-  const handleOAuthLogin = (provider) => {
-    const oAuthEmail = provider === 'Google' ? 'user@gmail.com' : 'user@icloud.com';
-    setUser({
-      name: provider === 'Google' ? 'Google User' : 'Apple User',
-      email: oAuthEmail,
-      initials: provider === 'Google' ? 'GU' : 'AU'
-    });
-    navigate('/dashboard');
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0d0f1d] via-[#1b1736] to-[#2d2254] flex items-center justify-center p-6 relative overflow-hidden">
       <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -488,39 +475,6 @@ const LoginPage = ({ setUser }) => {
           </div>
           <h1 className="text-2xl font-extrabold tracking-tight text-slate-800">Welcome Back</h1>
           <p className="text-xs text-slate-500 font-medium">Please enter your details to sign in</p>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          <button 
-            type="button" 
-            onClick={() => handleOAuthLogin('Google')}
-            className="flex items-center justify-center space-x-2 py-3 px-4 border border-purple-100 rounded-2xl bg-white hover:bg-purple-50/50 transition text-xs font-bold text-slate-700 cursor-pointer shadow-2xs"
-          >
-            <svg className="w-4 h-4" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
-              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.2v3.15C3.21 21.34 7.28 24 12 24z"/>
-              <path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.6H1.2C.43 8.15 0 9.89 0 12s.43 3.85 1.2 5.4l4.07-3.16z"/>
-              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.28 0 3.21 2.66 1.2 6.6l4.07 3.16c.95-2.85 3.6-4.96 6.73-4.96z"/>
-            </svg>
-            <span>Google</span>
-          </button>
-
-          <button 
-            type="button" 
-            onClick={() => handleOAuthLogin('Apple')}
-            className="flex items-center justify-center space-x-2 py-3 px-4 border border-purple-100 rounded-2xl bg-white hover:bg-purple-50/50 transition text-xs font-bold text-slate-700 cursor-pointer shadow-2xs"
-          >
-            <svg className="w-4 h-4 fill-current text-slate-800" viewBox="0 0 24 24">
-              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 5.35c.57-.69.96-1.65.85-2.61-.84.04-1.87.56-2.45 1.25-.53.62-.99 1.61-.87 2.55.95.07 1.9-.48 2.47-1.19z"/>
-            </svg>
-            <span>Apple</span>
-          </button>
-        </div>
-
-        <div className="flex items-center space-x-3">
-          <div className="flex-1 h-px bg-purple-100"></div>
-          <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Or with email</span>
-          <div className="flex-1 h-px bg-purple-100"></div>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
