@@ -44,18 +44,18 @@ export default function App() {
   });
 
   const [tasks, setTasks] = useState(() => {
-    const savedTasks = localStorage.getItem(`tasker_tasks_${user.email}`);
+    const savedTasks = localStorage.getItem('tasker_tasks_shared');
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
 
   useEffect(() => {
-    const savedTasks = localStorage.getItem(`tasker_tasks_${user.email}`);
+    const savedTasks = localStorage.getItem('tasker_tasks_shared');
     setTasks(savedTasks ? JSON.parse(savedTasks) : []);
-  }, [user.email]);
+  }, []);
 
   useEffect(() => {
-    localStorage.setItem(`tasker_tasks_${user.email}`, JSON.stringify(tasks));
-  }, [tasks, user.email]);
+    localStorage.setItem('tasker_tasks_shared', JSON.stringify(tasks));
+  }, [tasks]);
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
