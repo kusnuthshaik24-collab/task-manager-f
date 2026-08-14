@@ -516,17 +516,6 @@ const LoginPage = ({ setUser }) => {
             Sign In
           </button>
         </form>
-
-        <div className="text-center pt-2">
-          <a 
-            href="https://task-manager-b-1-evac.onrender.com" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-xs font-semibold text-purple-600 hover:underline"
-          >
-            https://task-manager-b-1-evac.onrender.com
-          </a>
-        </div>
       </div>
     </div>
   );
